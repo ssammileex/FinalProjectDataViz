@@ -1,0 +1,128 @@
+
+	figcaption { font-style: italic; }
+    svg { background-color: #F5F5F5; border: 1px solid lightgray; padding: 2em; display: block; }
+
+h1{
+  text-align:center;
+}
+
+#titlePage {
+	text-align: center;
+	color: white;
+}
+
+.header {
+	text-align: center;
+	font-size: 40px;
+	color: black;
+}
+	/* hover feature */
+        rect:hover {
+        fill: darkgrey;
+        cursor: pointer;
+      }
+
+      /* hover for scatterplot */
+      	circle:hover {
+      	fill: darkgrey;
+      }
+.introduction {
+	font-size: 18px;
+	color: #484848;
+
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial;
+    background-color: #79CDCD;
+    color: black;
+}
+
+/* Style tab links */
+.tablink {
+    background-color: #388E8E;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 20%;
+}
+
+.tablink:hover {
+    background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+    color: black;
+    display: none;
+    padding: 100px 20px;
+    height: 150%;
+}
+
+
+#Home {background-color: white;}
+#Table {background-color:white;}
+#Histogram {background-color: white;}
+#Scatterplot {background-color: white;}
+#Conclusion {background-color: white;}
+
+#creator1{
+	font-weight:bold;
+	font-size:18px;
+}
+
+#creator2 {
+	font-size:15px;
+}
+
+#purpleShore {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+#blackClaw {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+#redCrab {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#legendRect rect:hover{
+	fill:none;
+}
+
+#caption1{
+	font-size:12px;
+	color:#484848;
+}
+
+#caption2{
+	font-size:12px;
+	color:#484848;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+
+div.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+  font-size: 12px;
+}
