@@ -1,95 +1,120 @@
 <!DOCTYPE html>
-
+<head>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
+
+</head>
 <html>
 <body>
+  <div class="container">
+
+            <div class="border col-md-6">
+                <div class="bubble-chart"></div>
+            </div>
+       
+    </div>
+  
   <script>
+    //to create the function
+    function compressArray(original){
+      var compressed = [];
 
-    d3.csv("us-crime.csv", function(error, data){
+      var copy = original.slice(0);
 
-      var diameter = 500;
+      for(var i = 0; i < original.length; i++){
 
-      var color = d3.scaleOrdinal(d3.schemeCategory20c);
+        var myCount = 0;
 
-      var bubble = d3.pack()
+        for(var w = 0; w < copy.length; w++){
+          if(original[i] == copy[w]){
+            myCount++;
+            delete copy[w];
+          }
+        }
+        if(myCount > 0){
+          var a = new Object();
+          a.value = original[i];
+          a.count = myCount;
+          compressed.push(a);
+        }
+      }
+      return compressed;
+    };
 
-                    .size([diameter, diameter])
-                    .padding(1.5);
+  </script>
+  <script>
+      //to create chart
+        var margin = { top:10, right:10, bottom: 10, left:10},
+            width = 960,
+            height = 960,
+            svg = d3.selectAll('.bubble-chart').append('svg')
+                    .attr('width', '100%')
+                    .attr('height', '100%')
+                    .attr('viewBox', '-' + (margin.left + margin.right) + ' ' + (margin.bottom) + ' ' + width + ' ' + height)
+                    .attr('preserveAspectRatio', 'xMinYMin meet');
+       
+        width = width - margin.left - margin.right;
+        height = height - margin.top - margin.bottom;
+
+        var format = d3.format(',d');
+
+        var color = d3.scaleOrdinal(d3.schemeCategory20c);
+
+        var pack = d3.pack()
+            .size([width, height])
+            .padding(1.5);
+        
+        d3.csv('911Calls.csv', function(d){
+            var test = new Array(d.category);
+            var newArray = compressArray(test);
+            console.log(test);
+            d.count = +parseFloat(d.count);
+            if (d.count) return d;
+        }, function(error, classes){
+            if (error) throw error;
+
+            var root = d3.hierarchy({children: classes})
+                        .sum(function(d){ return d.count })
+                        .each(function(d){
+                            if (value = d.data.category) {
+                                var value, i = value.lastIndexOf('.');
+                                d.category = value;
+                                d.package = value.slice(0, i);
+                                d.class = value.slice(i+1);
+                            }
+                        });
+            
+            var node = svg.selectAll('.node')
+                        .data(pack(root).leaves())
+                        .enter()
+                        .append('g')
+                        .attr('class', 'node')
+                        .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+            
+            node.append('circle')
+                .attr('id', function(d){ return d.category; })
+                .attr('r', function(d){ return d.r; })
+                .style('fill', function(d){ return color(d.package); });
+            
+            node.append('clipPath')
+                .attr('state', function(d){ return 'clip-' + d.category; })
+                .append('use')
+                .attr('xlink:href', function(d){ return '#' + d.category; });
+            
+            node.append('text')
+                .attr('clip-path', function(d){ return 'url(#clip-' + d.State + ')'; })
+                .selectAll('tspan')
+                .data(function(d){ return d.class.split(/(?=[A-Z][^A-Z])/g); })
+                .enter().append('tspan')
+                        .attr('x', 0)
+                        .attr('y', function(d, i, nodes){ return 13 + (i-nodes.length /2 - 0.5) * 10; })
+                        .text(function(d){ return d; });
+            
+            node.append('title')
+                .text(function(d) { return d.category + '\n' + format(d.count); });
+        });
+
       
-      var svg = d3.select("body")
-                  .append("svg")
-                  .attr("width", diameter)
-                  .attr("height", diameter)
-                  .attr("class", "bubble");
-
-      var nodes = d3.hierarchy(data)
-                    .sum(function(d) { return d.Total; });
-
-      var node = svg.selectAll(".node")
-                    .data(bubble(nodes).descendants())
-                    .enter()
-                    .filter(function(d){
-                      return !d.children;
-                    })
-                    .append("g")
-                    .attr("class", "node")
-                    .attr("transform", function(d){
-                      return "translate(" + d.x + "," + d.y + ")";
-                    });
-          node.append("title")
-              .text(function(d){
-                return d.State + ": " + d.Total;
-              });
-
-          node.append("circle")
-              .attr("r", function(d){
-                return d.r;
-              })
-              .style("fill", function(d,i){
-                return color(i);
-              });
-
-          node.append("text")
-              .attr("dy", ".2em")
-              .style("text-anchor", "middle")
-              .text(function(d){
-                return d.data.State.substring(0, d.r / 3);
-              })
-              .attr("font-family", "sans-serif")
-              .attr("font-size", function(d){
-                return d.r / 5;
-              })
-              .attr("fill", "white");
-
-          d3.select(self.frameElement)
-            .style("height", diameter + "px");
-
-      // data = data.map(function(d){d.value = +d["Total"]; return d;});
-
-      // var nodes = bubble.nodes({children:data}).filter(function(d){ return !d.children;});
-
-      // var bubbles = svg.append("g")
-      //                   .attr("transform", "translate(0,0)")
-      //                   .selectAll(".bubble")
-      //                   .data(nodes)
-      //                   .enter();
-
-      // bubbles.append("circle")
-      //         .attr("r", function(d){ return d.r;})
-      //         .attr("cx", function(d){ return d.x;})
-      //         .attr("cy", function(d){ return d.y;})
-      //         .style("fill", function(d){ return color(d.value);});
-
-      // bubbles.append("text")
-      //         .attr("x", function(d){ return d.x;})
-      //         .attr("y", function(d){ return d.y + 5;})
-      //         .attr("text-anchor","middle")
-      //         .text(function(d){ return d["State"];})
-      //         .style({ "fill":"white",
-      //                   "font-size":"12px"});
-    });
-
 
   </script>
 </body>
