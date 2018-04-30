@@ -14,34 +14,6 @@
        
     </div>
   
-  <script>
-    //to create the function
-    function compressArray(original){
-      var compressed = [];
-
-      var copy = original.slice(0);
-
-      for(var i = 0; i < original.length; i++){
-
-        var myCount = 0;
-
-        for(var w = 0; w < copy.length; w++){
-          if(original[i] == copy[w]){
-            myCount++;
-            delete copy[w];
-          }
-        }
-        if(myCount > 0){
-          var a = new Object();
-          a.value = original[i];
-          a.count = myCount;
-          compressed.push(a);
-        }
-      }
-      return compressed;
-    };
-
-  </script>
 
   <script>
       //to create chart
@@ -66,32 +38,23 @@
             .padding(1.5);
 
         var array = [];
-        var da = {};
         
-        d3.csv('911Calls.csv', function(d){
-          array.push(d.category);
-
-            //d.count = +parseFloat(d.count);
-            if (d.count) return d;
+        d3.csv('us-crime.csv', function(d){
+            d.Total = +parseFloat(d.Total.replace(/,/g,''));
+            if (d.Total) return d;
         }, function(error, classes){
-          var newArray = ["93","ACCIDENT", "ALARM","AR","ASSAULT","AUTO THEFT", "BURGLARY", "DISORDERLY PERSON", "DRUGS", "FAMILY TROUBLE", "FIRE", "INVESTIGATE PERSON", "LARCENY","MEDICAL","OTHER","PRANK/OTHER", "RAPE","ROBBERY","SA","SI","T","TI","TRAFFIC","TS","W8"];
-          for (var i = 0; i != newArray.length; i++) {
-            da[newArray[i]] = array.filter(x => x==newArray[i]).length;
-          }
 
-          
-          console.log(da);
 
-            /*if (error) throw error;
+            if (error) throw error;
 
             var root = d3.hierarchy({children: classes})
-                        .sum(function(d){ return d.count })
+                        .sum(function(d){ return d.Total })
                         .each(function(d){
-                            if (value = d.data.category) {
-                                var value, i = value.lastIndexOf('.');
-                                d.category = value;
-                                d.package = value.slice(0, i);
-                                d.class = value.slice(i+1);
+                            if (state = d.data.State) {
+                                var state, i = state.lastIndexOf('.');
+                                d.State = state;
+                                d.package = state.slice(0, i);
+                                d.class = state.slice(i+1);
                             }
                         });
             
@@ -103,14 +66,14 @@
                         .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
             
             node.append('circle')
-                .attr('id', function(d){ return d.category; })
+                .attr('id', function(d){ return d.State; })
                 .attr('r', function(d){ return d.r; })
                 .style('fill', function(d){ return color(d.package); });
             
             node.append('clipPath')
-                .attr('state', function(d){ return 'clip-' + d.category; })
+                .attr('state', function(d){ return 'clip-' + d.State; })
                 .append('use')
-                .attr('xlink:href', function(d){ return '#' + d.category; });
+                .attr('xlink:href', function(d){ return '#' + d.State; });
             
             node.append('text')
                 .attr('clip-path', function(d){ return 'url(#clip-' + d.State + ')'; })
@@ -122,7 +85,7 @@
                         .text(function(d){ return d; });
             
             node.append('title')
-                .text(function(d) { return d.category + '\n' + format(d.count); });*/
+                .text(function(d) { return d.State + '\n' + format(d.Total); });
         });
 
       
