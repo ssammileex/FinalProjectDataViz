@@ -14,34 +14,6 @@
        
     </div>
   
-  <script>
-    //to create the function
-    function compressArray(original){
-      var compressed = [];
-
-      var copy = original.slice(0);
-
-      for(var i = 0; i < original.length; i++){
-
-        var myCount = 0;
-
-        for(var w = 0; w < copy.length; w++){
-          if(original[i] == copy[w]){
-            myCount++;
-            delete copy[w];
-          }
-        }
-        if(myCount > 0){
-          var a = new Object();
-          a.value = original[i];
-          a.count = myCount;
-          compressed.push(a);
-        }
-      }
-      return compressed;
-    };
-
-  </script>
 
   <script>
       //to create chart
@@ -66,36 +38,21 @@
             .padding(1.5);
 
         var array = [];
-        var da = {};
         
         d3.csv('911Calls.csv', function(d){
-          array.push(d.category);
-
-            //d.count = +parseFloat(d.count);
-            //if (d.count) return d;
+            d.Amount = +parseInt(d.Amount);
+            if (d.Amount) return d;
         }, function(error, classes){
-          var newArray = ["93","ACCIDENT", "ALARM","AR","ASSAULT","AUTO THEFT", "BURGLARY", "DISORDERLY PERSON", "DRUGS", "FAMILY TROUBLE", "FIRE", "INVESTIGATE PERSON", "LARCENY","MEDICAL","OTHER","PRANK/OTHER", "RAPE","ROBBERY","SA","SI","T","TI","TRAFFIC","TS","W8"];
-          for (var i = 0; i != newArray.length; i++) {
-            da[newArray[i]] = array.filter(x => x==newArray[i]).length;
-          }
-          
-          var output = Object.keys(newArray).map(function(key){
-
-            return {type: newArray[key], amount: da[newArray[key]]};
-          
-          });
-          
-          console.log(output.amount);
 
 
-          if (error) throw error;
+            if (error) throw error;
 
             var root = d3.hierarchy({children: classes})
-                        .sum(function(d){ return d.amount })
+                        .sum(function(d){ return d.Amount })
                         .each(function(d){
-                            if (type = d.data.type) {
+                            if (type = d.data.Type) {
                                 var type, i = type.lastIndexOf('.');
-                                d.type = type;
+                                d.Type = type;
                                 d.package = type.slice(0, i);
                                 d.class = type.slice(i+1);
                             }
@@ -109,26 +66,26 @@
                         .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
             
             node.append('circle')
-                .attr('id', function(d){ return d.type; })
+                .attr('id', function(d){ return d.Type; })
                 .attr('r', function(d){ return d.r; })
                 .style('fill', function(d){ return color(d.package); });
             
             node.append('clipPath')
-                .attr('state', function(d){ return 'clip-' + d.type; })
+                .attr('state', function(d){ return 'clip-' + d.Type; })
                 .append('use')
-                .attr('xlink:href', function(d){ return '#' + d.type; });
+                .attr('xlink:href', function(d){ return '#' + d.Type; });
             
             node.append('text')
-                .attr('clip-path', function(d){ return 'url(#clip-' + d.type + ')'; })
+                .attr('clip-path', function(d){ return 'url(#clip-' + d.Type + ')'; })
                 .selectAll('tspan')
-                .data(function(d){ return d.class.split(/(?=[A-Z][^A-Z])/g); })
+                .data(function(d){ return d.class.split(/(?=[A-Z][^A-Z])/g+2); })
                 .enter().append('tspan')
                         .attr('x', 0)
-                        .attr('y', function(d, i, nodes){ return 13 + (i-nodes.length /2 - 0.5) * 10; })
+                        .attr('y', function(d, i, nodes){ return 15 + (i-nodes.length /2 - 0.5) * 9; })
                         .text(function(d){ return d; });
             
             node.append('title')
-                .text(function(d) { return d.type + '\n' + format(d.amount); });
+                .text(function(d) { return d.Type + '\n' + d.Amount; });
         });
 
       

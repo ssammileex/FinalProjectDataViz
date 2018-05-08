@@ -8,18 +8,44 @@
 -->
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
+  	<meta charset="utf-8"/>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <title>US MAP</title>
+    <title>Crabs</title>
+
+   <style>
+        body {
+            position: absolute;
+            font-family: "Proxima Nova", "Montserrat", sans-serif;
+        }
+        h1, h2 {
+            position: absolute;
+            left: 10px;
+            font-size: 1.3em;
+            font-weight: 100;
+        }
+        h2 {
+            top: 30px;
+            font-size: 1em;
+        }
+        .hover {
+            fill: yellow;   
+        }
+        #sliderContainer {
+            text-align: center;
+            position: relative;
+            top: 600px;
+        }
+    </style>
+
 </head>
 
 <body>
-<h1  id="titlePage">Map!!</h1>
+	<h1>Map of the United States: Crime Rate by State</h1>
 
 	<script>
 		
 		//Define height and width
-		var h = 500;
+		var h = 550;
 		var w = 800;
 
 		//define projection
@@ -36,39 +62,38 @@
 		var color = d3.scaleQuantize()
 					  .range(["blue", "white", "pink", "green", "grey"]);
 
-		d3.csv("us-crime2.csv", function(data){
-			
-			var max = d3.max(data, function(d) { return d.Total.replace(/,/g,''); });
-			var min = d3.min(data, function(d) { return d.Total.replace(/,/g,''); });
-			console.log(max);
-			console.log(min);
+		var formatComma = d3.format(".1f");
+
+		d3.csv("us-crime.csv", function(data){
+		  	color.domain([
+		  		d3.min(formatComma(data), function(d) { return d.Total;}),
+		  		d3.max(formatComma(data), function(d) { return d.Total;})
+		  		]);
+		  	console.log(d3.min[data]);
+		  	console.log(d3.max[data]);
 
 		d3.json("us-states.json", function(json){
 		  for(var i = 0; i < data.length; i++){
 		  	var dataState = data[i].State;
-		  	var dataTotal = parseFloat(data[i].Total.replace(/,/g, ''));
-		
+		  	console.log(data[i].Total);
+		  	var dataTotal = parseInt(data[i].Total);
 
 
 		  	for(var j = 0; j < json.features.length; j++){
 		  		var jsonState = json.features[j].properties.name;
 		  			if(dataState == jsonState){
-
 		  				json.features[j].properties.Total = dataTotal;
 		  				break;
 		  			}
 		  	}
-
 		  }
 
-		  	
-		  
 		  //Create SVG element
           var svg = d3.select("body")
                 .append("svg")
                 .attr("width", w)
-                .attr("height", h);
-
+                .attr("height", h)
+                .attr("style", "outline: thin solid black;");
 
 			svg.selectAll("path")
 				.data(json.features)
@@ -78,7 +103,6 @@
 				.style("fill", function(d){
 					var value = d.properties.Total;
 						if(value){
-							console.log(value);
 							return color(value);
 						}else{
 							return "black";

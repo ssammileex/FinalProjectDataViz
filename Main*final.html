@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--
+  Course: DATA 300L 111 Spring 2018
+  Author: Samantha Errico and Allison Moshier
+  Email: Samantha.errico1@marist.edu | Allison.Moshier1@marist.edu
+  CWID: 200-57-156 | 200-55-652
+  Assignment: 5
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <title>Detroit Crime</title>
+    <Link rel="stylesheet" type="text/css" href = "hw5right.css">
+</head>
+
+<body>
+
+<h1 id="titlePage">The Crime Rate in Detroit</h1>
+    <div id = "discription"></div>
+    <div>
+    <iframe src = "FinalMap.html" width="815" height="570"></iframe>  
+    </div>
+   <div id = "finalMap"></div>
+	 <script type="text/javascript">
+    //Beginning Info
+    d3.select("#discription").append("p")
+      .text("The focus and story of these charts is to display the top five common crimes in Detroit, Michigan and if there is a correlation between the amount of 9-11 Calls Reported. Particularly, the researchers are interested in how many incidents truly get reported, which areas receive more 9-11 calls, and which actually have the most crimes.")
+      .style("font-size", "16px")
+      .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
+      .style("color", "#696969");
+
+    //Map of US
+    d3.select("#finalMap").append("p")
+      .text("The first graph below, is a map of the United States representing the number of crimes per state.")
+      .style("font-size", "16px")
+      .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
+      .style("color", "#696969");
+    </script> 
+
+    <div>
+     <iframe src = "practice.html" width="900" height="700"></iframe>  
+    </div>
+    <div id = "bubbleChart"></div>
+    <script type="text/javascript">
+    //Bubble Chart
+    d3.select("#bubbleChart").append("p")
+      .text("Next is a Bubble Chart that compares the amount of 9-11 calls with in Detroit. The purpose of this visulization is to represent the most popular kinds of 9-11 calls in Detroit.")
+      .style("font-size", "16px")
+      .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
+      .style("color", "#696969");
+     </script>
+
+    <div>
+      <iframe src = "DetroitMap.html" width="850" height="650"></iframe>  
+    </div>
+    <div id = "detroitMap"></div>
+    <script type="text/javascript">
+    //Map of Detroit
+    d3.select("#detroitMap").append("p")
+      .text("This Map of Detroit represents the type of crime within the city and where each isolated incident occurred. We note that the map is sectioned by zip code.")
+      .style("font-size", "16px")
+      .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
+      .style("color", "#696969");
+    </script> 
+
+    <h1 id = "centerText"> Conclusion </h1>
+    <div id = "conclusion"></div>
+    <script type="text/javascript">
+    d3.select("#conclusion").append("p")
+      .text("*Will be completed once the graphs are complete*")
+      .style("font-size", "12px")
+      .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
+      .style("color", "#FF0000");
+     </script>
+
+    <h1 id = "centerText"> Researchers </h1>
+    <div id = "sourceInfo"></div>
+    <script type="text/javascript">
+    //Source Information 
+    d3.select("#sourceInfo").append("p")
+      .text("Samantha Errico and Allison Moshier | Samantha.Errico1@marist.edu and Allison.Moshier1@marist.edu | 200-57-156 and 200-55-652 | DATA 300L 111: Data Visualization | April 27th, 2018 | Sources: https://data.world/detroit/detroit-911-calls and https://data.world/garyhoov/crime-rates-2016-by-us-metro-areas-with-city-detail and http://duspviz.mit.edu/d3-workshop/mapping-data-with-d3/ and https://data.detroitmi.gov/Government/City-of-Detroit-Zip-Code-Boundaries/ruqh-3htk")
+      .style("font-size", "12px")
+      .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
+      .style("color", "#FF0000");
+
+      
+  </script>
+</body>
+</html>
