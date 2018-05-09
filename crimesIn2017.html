@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<head>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+
+</head>
+<html>
+<body>
+  <div class="container">
+
+            <div class="border col-md-6">
+                <div class="bubble-chart"></div>
+            </div>
+       
+    </div>
+
+
+  <script>
+      //to create chart
+        var margin = { top:10, right:10, bottom: 10, left:10},
+            width = 960,
+            height = 960,
+            svg = d3.selectAll('.bubble-chart').append('svg')
+                    .attr('width', '100%')
+                    .attr('height', '100%')
+                    .attr('viewBox', '-' + (margin.left + margin.right) + ' ' + (margin.bottom) + ' ' + width + ' ' + height)
+                    .attr('preserveAspectRatio', 'xMinYMin meet');
+       
+        width = width - margin.left - margin.right;
+        height = height - margin.top - margin.bottom;
+
+        var format = d3.format(',d');
+
+        var color = d3.scaleOrdinal(d3.schemeCategory20c);
+
+        var pack = d3.pack()
+            .size([width, height])
+            .padding(1.5);
+
+        var tooltip = d3.select("body")
+                        .append("div")
+                        .style("position", "absolute")
+                        .style("z-index", "10")
+                        .style("visibility", "hidden")
+                        .style("color", "white")
+                        .style("padding", "8px")
+                        .style("background-color", "rgba(0, 0, 0, 0.75)")
+                        .style("border-radius", "6px")
+                        .style("font", "12px sans-serif")
+                        .text("tooltip");
+        
+        d3.csv('crimes2017.csv', function(d){
+           // d.Amount = +parseFloat(d.Amount);
+            if (d.Amount) return d;
+        }, function(error, classes){
+
+
+            if (error) throw error;
+
+            var root = d3.hierarchy({children: classes})
+                        .sum(function(d){ return d.Amount })
+                        .each(function(d){
+                            if (type = d.data.Type) {
+                                var type, i = type.lastIndexOf('.');
+                                d.Type = type;
+                                d.package = type.slice(0, i);
+                                d.class = type.slice(i+1);
+                            }
+                        });
+            
+            var node = svg.selectAll('.node')
+                        .data(pack(root).leaves())
+                        .enter()
+                        .append('g')
+                        .attr('class', 'node')
+                        .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });
+            
+            node.append('circle')
+                .attr("r", function(d) { return d.r; })
+                .style("fill", function(d) { return color(d.package); })
+                .on("mouseover", function(d) {
+                          tooltip.text(d.Type + ": " + format(d.Amount));
+                          tooltip.style("visibility", "visible");
+                })
+                .on("mousemove", function() {
+                      return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                })
+                .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+            node.append("text")
+                .attr("dy", ".3em")
+                .style("text-anchor", "middle")
+                .style("pointer-events", "none")
+                .text(function(d) { return d.Type.substring(0, d.r / 3); });
+
+        });
+
+      
+
+  </script>
+</body>
+</html>

@@ -127,74 +127,74 @@
 					});
 
 			// draw legend
-            var legend = svg.selectAll(".legend")
-                .data(["20000,170000,320000,470000,620000,770000,920000,1070000,1220000,1370000,1520000,1670000,1820000,1970000,2120000,2270000,2420000"])
-              .enter().append("g")
-                .attr("class", "legend")
-                .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+            // var legend = svg.selectAll(".legend")
+            //     .data(["20000,170000,320000,470000,620000,770000,920000,1070000,1220000,1370000,1520000,1670000,1820000,1970000,2120000,2270000,2420000"])
+            //   .enter().append("g")
+            //     .attr("class", "legend")
+            //     .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
-            // draw legend colored rectangles
-            legend.append("rect")
-              .attr("id", "legendRect")
-                .attr("x",  190)
-                .attr("y", 43)
-                .attr("width", 18)
-                .attr("height", 18)
-                .attr("fill", function(d){
-                  if (d <= "20000"){
-                    return "#ffe6e6";
-                  }else if (d <= "170000"){
-                    return "#ffcccc";
-                  }else if(d <= "320000"){
-                    return "#ffb3b3"
-                  }else if(d <= "470000"){
-                  	return "ff9999";
-                  }else if(d <= "620000"){
-                  	return "#ff8080";
-                  }else if(d <= "770000"){
-                  	return "#ff6666";
-                  }else if(d <= "920000"){
-                  	return "#ff4d4d";
-                  }else if(d <= "1070000"){
-                  	return "#ff3333";
-                  }else if(d <= "1220000"){
-                  	return "#ff1a1a";
-                  }else if(d <="1370000"){
-                  	return "#ff0000";
-                  }else if(d <= "1520000"){
-                  	return "#e60000";
-                  }else if(d <= "1670000"){
-                  	return "#cc0000";
-                  }else if(d <= "1820000"){
-                  	return "#b30000";
-                  }else if(d <= "1970000"){
-                  	return "#990000";
-                  }else if(d <= "2120000"){
-                  	return "800000";
-                  }else if(d ="2270000"){
-                  	return "#660000";
-                  }else{
-                  	return "#4d0000";
-                  }
-                 });
+            // // draw legend colored rectangles
+            // legend.append("rect")
+            //   .attr("id", "legendRect")
+            //     .attr("x",  190)
+            //     .attr("y", 43)
+            //     .attr("width", 18)
+            //     .attr("height", 18)
+            //     .attr("fill", function(d){
+            //       if (d <= "20000"){
+            //         return "#ffe6e6";
+            //       }else if (d <= "170000"){
+            //         return "#ffcccc";
+            //       }else if(d <= "320000"){
+            //         return "#ffb3b3"
+            //       }else if(d <= "470000"){
+            //       	return "ff9999";
+            //       }else if(d <= "620000"){
+            //       	return "#ff8080";
+            //       }else if(d <= "770000"){
+            //       	return "#ff6666";
+            //       }else if(d <= "920000"){
+            //       	return "#ff4d4d";
+            //       }else if(d <= "1070000"){
+            //       	return "#ff3333";
+            //       }else if(d <= "1220000"){
+            //       	return "#ff1a1a";
+            //       }else if(d <="1370000"){
+            //       	return "#ff0000";
+            //       }else if(d <= "1520000"){
+            //       	return "#e60000";
+            //       }else if(d <= "1670000"){
+            //       	return "#cc0000";
+            //       }else if(d <= "1820000"){
+            //       	return "#b30000";
+            //       }else if(d <= "1970000"){
+            //       	return "#990000";
+            //       }else if(d <= "2120000"){
+            //       	return "800000";
+            //       }else if(d ="2270000"){
+            //       	return "#660000";
+            //       }else{
+            //       	return "#4d0000";
+            //       }
+            //      });
 
-			svg.selectAll("path")
-				.data(json.features)
-				.enter()
-				.append("path")
-				.attr("d", path);
+			// svg.selectAll("path")
+			// 	.data(json.features)
+			// 	.enter()
+			// 	.append("path")
+			// 	.attr("d", path);
 
-			svg.append("path")
-                .attr("r", function(d) { return d.r; })
-                .style("fill", function(d) { return color(d.package); })
-                .on("mouseover", function(d) {
-                          tooltip.text(d.State + ": " + format(d.Total));
-                          tooltip.style("visibility", "visible");
-                })
-                .on("mousemove", function() {
-                      return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
-                })
-                .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+			// svg.append("path")
+   //              .attr("r", function(d) { return d.r; })
+   //              .style("fill", function(d) { return color(d.package); })
+   //              .on("mouseover", function(d) {
+   //                        tooltip.text(d.State + ": " + format(d.Total));
+   //                        tooltip.style("visibility", "visible");
+   //              })
+   //              .on("mousemove", function() {
+   //                    return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+   //              })
+   //              .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
 		});
 	});
