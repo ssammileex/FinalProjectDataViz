@@ -26,28 +26,37 @@
 	 <script type="text/javascript">
     //Beginning Info
     d3.select("#discription").append("p")
-      .text("The focus and story of these charts is to display the top five common crimes in Detroit, Michigan and if there is a correlation between the amount of 9-11 Calls Reported. Particularly, the researchers are interested in how many incidents truly get reported, which areas receive more 9-11 calls, and which actually have the most crimes.")
+      .text("A crime is an action that constitutes an offense that may be prosecuted by the state and is punishable by law. There are many types of crime, and some are more common than others. This page explores crimes committed, as well as 911 calls made specificially in Detriot, Michigan.")
       .style("font-size", "16px")
       .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
       .style("color", "#696969");
 
-    //Map of US
-    d3.select("#finalMap").append("p")
-      .text("The first graph below, is a map of the United States representing the number of crimes per state.")
+      d3.select("#discription").append("p")
+      .text("According to the FBI, violent crime has fallen 48% between 1993 and 2016. However, there are still many areas with a high concentation of crime. Many cities in California, Texas, Florida, Michigan, and Illionis still report a lot of crime. Observe the map below. Lighter colors mean a lower concentration of crime, whereas the darker colors mean a higher concentraion of crime.")
       .style("font-size", "16px")
       .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
       .style("color", "#696969");
+
+    
     </script> 
 
     <div>
-     <iframe src = "practice.html" width="500" height="500" align="center"></iframe> 
-     <iframe src = "crimesIn2017.html" width="500" height="500" align="center"></iframe>  
+      <div id = "bubbleChart"></div>
+      <script>
+     d3.select("#bubbleChart").append("p")
+      .text("For the remainder of this project we are going to focus on Detriot, Michigan. The first Bubble Chart is displaying the amounts and types of 911 calls made in 2016. The second Bubble Chart is displaying the amounts and types of crime actually committed in 2017. Oberve these charts below.")
+      .style("font-size", "16px")
+      .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
+      .style("color", "#696969");
+    </script>
+     <iframe src = "practice.html" width="500" height="600" align="center"></iframe> 
+     <iframe src = "crimesIn2017.html" width="500" height="600" align="center"></iframe>  
     </div>
     <div id = "bubbleChart"></div>
     <script type="text/javascript">
     //Bubble Chart
-    d3.select("#bubbleChart").append("p")
-      .text("Next is a Bubble Chart that compares the amount of 9-11 calls with in Detroit. The purpose of this visulization is to represent the most popular kinds of 9-11 calls in Detroit.")
+    d3.select("#detriotMap").append("p")
+      .text("From the Bubble Charts above we notice that Prank Calls are the majority of the 911 calls. We also noticed there more sexual assualt cases called in than actually reported. There were also more auto theft, burglary, and theft committed than called in. ")
       .style("font-size", "16px")
       .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
       .style("color", "#696969");
@@ -55,6 +64,14 @@
 
     
     <div>
+      <div id = "detroitMap"></div>
+      <script>
+      d3.select("#detriotMap").append("p")
+      .text("This map of Detroit represents the type of crime within the city and where each isolated incident occurred. We note that the map is sectioned by zip code. The first map, with the red dots are the 911 calls. The second map, with the blue dots are crimes that were reported.")
+      .style("font-size", "16px")
+      .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
+      .style("color", "#696969");
+    </script>
       <iframe src = "Assignment5.html" width="500" height="500"></iframe>  
       <iframe src = "workingpls.html" width="500" height="500"></iframe> 
     </div>
@@ -62,20 +79,21 @@
     <script type="text/javascript">
     //Map of Detroit
     d3.select("#detroitMap").append("p")
-      .text("This Map of Detroit represents the type of crime within the city and where each isolated incident occurred. We note that the map is sectioned by zip code.")
+      .text("After doing some analysis, we notice that where there is a higher concentation of 911 calls, there is not as many crimes reported, and where there is less 911 calls made, there is a higher concentraion of crime committed.")
       .style("font-size", "16px")
       .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
       .style("color", "#696969");
-    </script> 
+    </script>
+
 
     <h1 id = "centerText"> Conclusion </h1>
     <div id = "conclusion"></div>
     <script type="text/javascript">
     d3.select("#conclusion").append("p")
-      .text("*Will be completed once the graphs are complete*")
-      .style("font-size", "12px")
+      .text("While it has been reported by the FBI that violent crime has gone down significantly, it is still occuring. The main focus of our project was to compare the amount of 911 calls made to the amount of crime actually reported. A surprising conclusion was the amount of prank calls made. We were not surprised that there were some areas with higher concentraion of crime, and lower amounts of 911 calls. Thus, crime and reporting crime is still a major issue today.")
+      .style("font-size", "16px")
       .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
-      .style("color", "#FF0000");
+      .style("color", "#696969");
      </script>
 
     <h1 id = "centerText"> Researchers </h1>
