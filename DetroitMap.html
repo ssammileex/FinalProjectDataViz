@@ -10,7 +10,7 @@
 <head>
   <meta charset="utf-8"/>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="/Documents/GitHub/hw5-project-prototype-allison-moshier1-marist-edu/Detroit-ZipCode.json"></script>
+    <script src="Detroit-ZipCode.json"></script>
     <title>Detroit Crime</title>
     <style>
         body {
@@ -42,12 +42,14 @@
     <h2></h2>
     <div id="sliderContainer">
         <input id="timeslide" type="range" min="0" max="11" value="0" step="1"/><br>
-        <span id="range">9-11 Calls</span>
+        <span id="range">911 Calls</span>
     </div>
 	<script>
 	
     var width = 800;
     var height = 550;
+
+    var crimeType = ["9-11 Calls","Actual Incidents","Both"];
 
     //plotting the map of detroit
     var svg = d3.select( "body" )
@@ -77,56 +79,23 @@
 
     //interactivity
     // var inputValue = null;
-    var crimeType = ["9-11 Calls","Actual Incidents","Both"];
+    // var crimeType = ["9-11 Calls","Actual Incidents","Both"];
     // var crimeType = ["PRANK/OTHER","INVESTIGATE PERSON","FAMILY TROUBLE","SA","ASSAULT","DISORDERLY PERSON"];
     //interactivity.... 
     var calls = svg.append( "g" );
-
-    var array =[];
-    var da = {}; 
    
     d3.csv('911Calls.csv', function(d) {
-        array.push(d.category); 
-        //d.count = +parseFloat(d.count); 
-        if(d.count) return d; 
-        }, function(error, classes) {
-           var newArray = ["93", "ACCIDENT", "ALARM", "AR", "ASSAULT", "AUTO THEFT", "BURGLARY", "DISORDERLY PERSON", "DRUGS", "FAMILY TROUBLE", "FIRE", "INVESTIGATE PERSON", "LARCENY", "MEDICAL", "OTHER", "PRANK/OTHER", "RAPE", "ROBBERY", "SA", "SI", "T", "TI", "TRAFFIC", "TS", "W8"]; 
-           for (var i = 0; i != newArray.length; i++) {
-             da[newArray[i]] = array.filter(x => x==newArray[i]).length;
-          }
-        var output = Object.keys(newArray).map(function(key){
-            var type = newArray[key];
-            var amount = da[newArray[key]];
-            return [type, amount];
-          });
-          
-          //console.log(Object.values(output.key));
-          console.log(output);
- 
-        // function getLocation(dataset){
-        //     var mapData = [];
-        //     dataset.forEach(function(d){
-        //         mapData.push(parseFloat(d["locaition"])); 
-        //     })
-        //     return mapData; 
-        // }
         
     var path = calls.selectAll( "path" )
-        .data(type)
+        .data(d.type)
         .enter()
         .append( "path" )
+        .attr("fill", initialDate)
         .attr("stroke", "#ccc")
         .attr("d", geoPath)
-        .attr("fill", function(d){
-          if (d == "PRANK/OTHER") {
-            return "red"; 
-          } else {
-            return "purple"
-          }
-        })
         .attr("class","incident")
         .on("mouseover", function(d){
-            d3.select("h2").text(type);
+            d3.select("h2").text(d.properties.type);
             d3.select(this).attr("class","incident hover");
         })
         .on("mouseout", function(d){
@@ -134,39 +103,39 @@
             d3.select(this).attr("class","incident");
         });
 
-    // //when the input range changes update the rectangle 
-    // d3.select("#timeslide").on("input", function() {
-    //     update(+this.value);
-    // });
+    //when the input range changes update the rectangle 
+    d3.select("#timeslide").on("input", function() {
+        update(+this.value);
+    });
 
-    // function update(value) {
-    //     document.getElementById("range").innerHTML=month[value];
-    //     inputValue = crimeType[value];
-    //     d3.selectAll(".incident")
-    //         .attr("fill", dateMatch);
-    // }
+    function update(value) {
+        document.getElementById("range").innerHTML=month[value];
+        inputValue = crimeType[value];
+        d3.selectAll(".incident")
+            .attr("fill", dateMatch);
+    }
 
-    // function dateMatch(data, value) {
-    //     var d = new Date(data.properties.OPEN_DT);
-    //     var m = crimeType[d.getMonth()];
-    //     if (inputValue == m) {
-    //         this.parentElement.appendChild(this);
-    //         return "red";
-    //     } else {
-    //         return "#999";
-    //     };
-    // }
+    function dateMatch(data, value) {
+        var d = new Date(data.properties.OPEN_DT);
+        var m = crimeType[d.getMonth()];
+        if (inputValue == m) {
+            this.parentElement.appendChild(this);
+            return "red";
+        } else {
+            return "#999";
+        };
+    }
 
-    // function initialDate(d,i){
-    //     var d = new Date(d.properties.OPEN_DT);
-    //     var m = crimeType[d.getMonth()];
-    //     if (m == "January") {
-    //         this.parentElement.appendChild(this);
-    //         return "red";
-    //     } else {
-    //         return "#999";
-    //     };
-    // }
+    function initialDate(d,i){
+        var d = new Date(d.properties.OPEN_DT);
+        var m = crimeType[d.getMonth()];
+        if (m == "January") {
+            this.parentElement.appendChild(this);
+            return "red";
+        } else {
+            return "#999";
+        };
+    }
 
     });
 	

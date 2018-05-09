@@ -59,18 +59,35 @@
 					 .projection(projection);
 
 		//create color gradient
+		//var color = d3.scaleOrdinal(d3.schemeCategory10);
+
 		var color = d3.scaleQuantize()
-					  .range(["blue", "white", "pink", "green", "grey"]);
+					.domain([20000,170000,320000,470000,620000,770000,920000,1070000,1220000,1370000,1520000,1670000,1820000,1970000,2120000,2270000,2420000])
+					.range(["#ffe6e6","#ffcccc","#ffb3b3","ff9999","#ff8080","#ff6666","#ff4d4d","#ff3333","#ff1a1a", "#ff0000","#e60000", "#cc0000", "#b30000", "#990000", "800000", "#660000", "#4d0000" ]);
 
-		var formatComma = d3.format(".1f");
+ 
+		//var formatComma = d3.format(".1f");
+		var tooltip = d3.select("body")
+                        .append("div")
+                        .style("position", "absolute")
+                        .style("z-index", "10")
+                        .style("visibility", "hidden")
+                        .style("color", "white")
+                        .style("padding", "8px")
+                        .style("background-color", "rgba(0, 0, 0, 0.75)")
+                        .style("border-radius", "6px")
+                        .style("font", "12px sans-serif")
+                        .text("tooltip");
 
-		d3.csv("us-crime.csv", function(data){
-		  	color.domain([
-		  		d3.min(formatComma(data), function(d) { return d.Total;}),
-		  		d3.max(formatComma(data), function(d) { return d.Total;})
-		  		]);
-		  	console.log(d3.min[data]);
-		  	console.log(d3.max[data]);
+		d3.csv("usCrimes.csv", function(data){
+		  	//data.Total += parseInt(data.Total)
+		  	
+		var min = d3.min(data, function(d) { return parseInt(d.Total);});
+		var max = d3.max(data, function(d) { return parseInt(d.Total);});
+		
+		color.domain([min,max]);  	
+		  	console.log(min);
+		  	console.log(max);
 
 		d3.json("us-states.json", function(json){
 		  for(var i = 0; i < data.length; i++){
@@ -109,11 +126,75 @@
 						}
 					});
 
+			// draw legend
+            var legend = svg.selectAll(".legend")
+                .data(["20000,170000,320000,470000,620000,770000,920000,1070000,1220000,1370000,1520000,1670000,1820000,1970000,2120000,2270000,2420000"])
+              .enter().append("g")
+                .attr("class", "legend")
+                .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+            // draw legend colored rectangles
+            legend.append("rect")
+              .attr("id", "legendRect")
+                .attr("x",  190)
+                .attr("y", 43)
+                .attr("width", 18)
+                .attr("height", 18)
+                .attr("fill", function(d){
+                  if (d <= "20000"){
+                    return "#ffe6e6";
+                  }else if (d <= "170000"){
+                    return "#ffcccc";
+                  }else if(d <= "320000"){
+                    return "#ffb3b3"
+                  }else if(d <= "470000"){
+                  	return "ff9999";
+                  }else if(d <= "620000"){
+                  	return "#ff8080";
+                  }else if(d <= "770000"){
+                  	return "#ff6666";
+                  }else if(d <= "920000"){
+                  	return "#ff4d4d";
+                  }else if(d <= "1070000"){
+                  	return "#ff3333";
+                  }else if(d <= "1220000"){
+                  	return "#ff1a1a";
+                  }else if(d <="1370000"){
+                  	return "#ff0000";
+                  }else if(d <= "1520000"){
+                  	return "#e60000";
+                  }else if(d <= "1670000"){
+                  	return "#cc0000";
+                  }else if(d <= "1820000"){
+                  	return "#b30000";
+                  }else if(d <= "1970000"){
+                  	return "#990000";
+                  }else if(d <= "2120000"){
+                  	return "800000";
+                  }else if(d ="2270000"){
+                  	return "#660000";
+                  }else{
+                  	return "#4d0000";
+                  }
+                 });
+
 			svg.selectAll("path")
 				.data(json.features)
 				.enter()
 				.append("path")
 				.attr("d", path);
+
+			svg.append("path")
+                .attr("r", function(d) { return d.r; })
+                .style("fill", function(d) { return color(d.package); })
+                .on("mouseover", function(d) {
+                          tooltip.text(d.State + ": " + format(d.Total));
+                          tooltip.style("visibility", "visible");
+                })
+                .on("mousemove", function() {
+                      return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                })
+                .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
 		});
 	});
