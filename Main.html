@@ -26,13 +26,13 @@
 	 <script type="text/javascript">
     //Beginning Info
     d3.select("#discription").append("p")
-      .text("A crime is an action that constitutes an offense that may be prosecuted by the state and is punishable by law. There are many types of crime, and some are more common than others. This page explores crimes committed, as well as 911 calls made specificially in Detriot, Michigan. According to the FBI, violent crime has fallen 48% between 1993 and 2016. However, there are still many areas with a high concentation of crime, especially in metropolitian ares. Such cities include: California, Texas, Florida, Michigan, and Illionis. These areas are noted as high crime areas.")
+      .text("A crime is an action that constitutes an offense that may be prosecuted by the state and is punishable by law. There are many types of crime, and some are more common than others. This page explores crimes committed, as well as 911 calls made specificially in Detriot, Michigan. According to the FBI, violent crime has fallen 48% between 1993 and 2016. However, there are still many areas with a high concentration of crime, especially in metropolitian ares. Such cities include: California, Texas, Florida, Michigan, and Illionis. These areas are noted as high crime areas.")
       .style("font-size", "18px")
       .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
       .style("color", "#696969");
 
       d3.select("#discription").append("p")
-      .text("Observe the map below, which is dipicts the amount of crime for 2016. Lighter colors mean a lower concentration of crime, whereas the darker colors mean a higher concentraion of crime.")
+      .text("Observe the map below, which dipicts the amount of crime for 2016. Lighter colors mean a lower concentration of crime, whereas the darker colors mean a higher concentration of crime.")
       .style("font-size", "16px")
       .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
       .style("color", "#696969");
@@ -42,7 +42,7 @@
       <div id = "bubbleChart"></div>
       <script>
      d3.select("#bubbleChart").append("p")
-      .text("We notice above that the map shows up that Detroit has a average level crime rate (not too high, not too low), making it perfect to focus on Detriot, Michigan for the remainder of the project. We want to look spefically into 911 calls as well as the actual crime that was committed. Lets begin by looking at Bubble Charts. Bubble charts are great for representing and comparing amounts when there are extreme lows and extreme highs, we note that there is quite a range for the totals. The first Bubble Chart is displaying the amounts and types of 911 calls made in 2016. The second Bubble Chart is displaying the amounts and types of crime actually committed in 2017. Oberve these charts below.")
+      .text("We notice above that the map shows us that Detroit has an average level crime rate; therefore making it perfect to focus on Detriot, Michigan for the remainder of the project. We want to look specifically into 911 calls as well as the actual crime that was committed. Lets begin by looking at Bubble Charts. Bubble charts are great for representing and comparing amounts when there are extreme lows and extreme highs, we note that there is quite a range for the total count of each crime type. The first Bubble Chart displays the amounts and types of 911 calls made in 2016. The second Bubble Chart displays the amounts and types of crime actually committed in 2017. Oberve these charts below.")
       .style("font-size", "16px")
       .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
       .style("color", "#696969");
@@ -63,20 +63,20 @@
     <script type="text/javascript">
       //Bubble Chart
       d3.select("#bubbleChart2").append("p")
-      .text("From the Bubble Charts above we notice that Prank Calls are the majority of the 911 calls, which is very surprising. However, this is also very important to take note of becuase this could skew and have a negative impact on the results during further research. We also noticed there are more sexual assualt cases called in than actually reported. Also, there were more auto theft, burglary, and theft committed than called in. Questionaly, we wonder why/ how does this get reported but not called in? There could be a few reasons as to why: these crimes could have been added on once the officers arrived at the crime sceen or they were reported in court.")
+      .text("From the Bubble Charts above we notice that Prank Calls are the majority of the 911 calls, which is very surprising. However, this is also very important to take note of becuase this could skew and have a negative impact on the results during further research. We also noticed there are more sexual assualt cases called in than actually reported. Also, there were more auto theft, burglary, and theft committed than called in. We wonder why/how does this get reported but not called in? There could be a few reasons as to why: these crimes could have been added on once the officers arrived at the crime sceen or they were reported in court.")
       .style("font-size", "16px")
       .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
       .style("color", "#696969");
 
       d3.select("#detroitMap").append("p")
-      .text("Below are two identical maps of Detroit, the only difference between the two maps are the data points that are plotted on them. The first map to the left, with the dark red dots, are the 911 calls. The second map to the right, with the light red dots, are crimes that were actuallyreported. It is noted that the location of each crime is at block level meaning that the latitude and longitude of each data point were reported at their block level in order to protect the victims idenity. We also note that we took a sample of data from the actual data set, since there would be far too many data points that would cover the map and thus making conclusions from the visualization would be strenuous.")
+      .text("Below are two identical maps of Detroit, the only difference between the two maps are the data points that are plotted on them. The first map to the left, with the dark red dots, are the 911 calls. The second map to the right, with the light red dots, are crimes that were actually reported. It is noted that the location of each crime is at block level meaning that the latitude and longitude of each data point were reported at their block level in order to protect the victims idenity. We also note that we took a sample of data from the actual dataset; the reason was that there would be far too many data points that would cover the map and thus making conclusions from the visualization would be ineffective.")
       .style("font-size", "16px")
       .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
       .style("color", "#696969");
 
     //Map of Detroit
     d3.select("#detroitMap2").append("p")
-      .text("After doing some analysis, we notice that where there is a higher concentation of 911 calls, there is not as many crimes reported, and where there is less 911 calls made, there is a higher concentraion of crime committed. There could be a number of reasons for this and thus we can conclude that 911 calls do not neccessiarly predict crime reported, as we first had assumed.")
+      .text("After doing some analysis, we notice that where there is a higher concentation of 911 calls, there is not as many crimes reported, and where there is less 911 calls made, there is a higher concentraion of crime committed. There could be a number of reasons for this and thus we can conclude that 911 calls do not necessarily predict crime reported, as we first had assumed.")
       .style("font-size", "16px")
       .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
       .style("color", "#696969");
@@ -87,7 +87,7 @@
     <div id = "conclusion"></div>
     <script type="text/javascript">
     d3.select("#conclusion").append("p")
-      .text("Although it was orginally assumed that there would be a strong correlation to the amount of 911 calls reported in one area and would influence the amount of actual crime reported, this was not the case. However, this could be explored and compared to other cities. While it has been reported by the FBI that violent crime has gone down significantly, it is still occuring. The main focus of our project was to compare the amount of 911 calls made to the amount of crime actually reported. A surprising conclusion was the amount of prank calls made. We were not surprised that there were some areas with higher concentraion of crime, and lower amounts of 911 calls. Thus, crime and reporting crime is still a major issue today.")
+      .text("Although it was orginally assumed that there would be a strong correlation to the amount of 911 calls reported in one area and would influence the amount of actual crime reported, this was not the case. However, this could be explored and compared to other cities. While it has been reported by the FBI that violent crime has gone down significantly, it is still occuring. The main focus of our project was to compare the amount of 911 calls made to the amount of crime actually reported. A surprising conclusion was the amount of prank calls made. Thus, crime and reporting crime is still a major issue today.")
       .style("font-size", "16px")
       .style("font-family", "Proxima Nova", "Montserrat", "sans-serif")
       .style("color", "#696969");
